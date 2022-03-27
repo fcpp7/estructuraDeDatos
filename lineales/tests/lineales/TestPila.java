@@ -7,206 +7,106 @@ import java.util.Scanner;
 
 public class TestPila {
     
-    public static void main(String [] args){
-        // Creamos la pila
+
+    public static void main(String[] args){
+        // Clase principal. Se crea una pila vacía y luego se establecen opciones 
+        // para que el usuario decida como ir haciendo los testings.
+
+
+        int opcionMenu;
+
         Pila miPila = new Pila();
 
-        // EL parametro int i es la cantidad de elementos que tenemos en la pila.
-        int i = 0;
-
-        
-        // Imprimimos por pantalla la pila desde que tiene 0 elementos hasta que le agregamos
-        // todos los multiplos de 10 para completarla.
-        System.out.println("El test de apilado es:");
-        while(i <= 20){
-            System.out.println("La pila con " + i + " elementos es: " + miPila.toString());
-            miPila.apilar((i+1)*10);
-            i++;
-        }
-        
-        // En este punto tenemos una pila completa.
-        
-        // Hacemos un test de apilar otro elemento y vemos que devuelve el método 
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de apilar elemento con la pila llena: ");
-        System.out.println("Intento de apilar otro objeto con la cadena llena : " + miPila.apilar(210));
-        
-        // Test de desapilar un elemento:
-         System.out.println("--------------------------------------------------------------");
-         System.out.println("Test de desapilar un elemento:");
-
-         
-        // Casteamos al int
-        int top = (int) miPila.obtenerTope();
-        System.out.println("El último elemento actual de la pila es: " + top);
-        
-        // Desapilamos el elemento. Devolvemos el valor de verdad (verdadero si pudo desapilar y falso sino.
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de método desapilar:");
-        System.out.println("La operación de desapilar el último elemento fue: " + miPila.desapilar());
-        
-        // El nuevo elemento que ocupa el tope de la pila es
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Nuevo tope de la pila luego del desapilado:");
-        top = (int) miPila.obtenerTope();
-        System.out.println("El nuevo tope de la pila es: " + top);
-        
-        // Test de esVacia. En este caso tenemos una pila con elementos, por lo que tiene que retornar falso.
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de método esVacia():");
-        System.out.println("La pila es vacía es: " + miPila.esVacia());        
-        
-        // Test de vaciar. Mostramos por pantalla la lista como esta y luego como queda después de aplicar el método vaciar..
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Pila antes de vaciarla:");
-        System.out.println("La pila actual es: " + miPila.toString());
-
-        // Aplicamos el método vaciar.
-        miPila.vaciar();
-        
-        // Mostramos la nueva pila vacía
-        System.out.println("Pila luego de usar vaciar():");
-        System.out.println("La pila luego de vaciar() es: " + miPila.toString());
-        
-        // Teniendo la pila vacía testeamos despilar un elemento. Debería devolver false.
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de desapilar() con pila vacía:");
-        System.out.println("El intento de desapilar una pila vacía toma resultado: " + miPila.desapilar());
-
-        // Teniendo la pila vacía testeamos que el método esVacia() haya retorne true.
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de esVacia() con pila vacía:");
-        System.out.println("El método esVacia(), con una pila vacía, devuelve: " + miPila.esVacia());
-        
-        // LLenamos la pila con 10 elementos para luego clonarla.
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de clone. Se presenta una pila de 10 elementos: ");
-        i = 0;
-        while(i < 10){
-            miPila.apilar((i+1)*10);
-            i++;
-        }
-        System.out.println("La pila a clonar es: " + miPila.toString());
-        
-        // Aplicamos clone para crear una nuevaPila
-        
-        Pila nuevaPila = miPila.clone();
-        
-        System.out.println("La pila clonada es: " + nuevaPila.toString());
-        
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test método equals con dos pilas iguales");
-        System.out.println("equals: " + miPila.equals(nuevaPila));
-        // Si apilamos un objeto en la nueva pila, no debería mostrarse en la original
-        nuevaPila.apilar(110);
-        
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Apilamos un dato en la pila clonada y vemos si son iguales o no");
-        System.out.println("La pila original es: " + miPila.toString());
-        System.out.println("La pila clonada es: " + nuevaPila.toString());
-     
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test método equals con dos pilas distintas");
-        System.out.println("equals: " + miPila.equals(nuevaPila));
-        
-     
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test método capicua con una pila NO capicua");
-        System.out.println("capicua: " + capicua(miPila));
-
-        // Vaciamos la pila miPila y luego le asignamos los datos [1,2,1] para que sea capicua
-
-        miPila.vaciar();
-        miPila.apilar(1);
-        miPila.apilar(2);
-        miPila.apilar(1);
-
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test método capicua con una pila capicua [1,2,1]");
-        System.out.println("capicua: " + capicua(miPila));
-
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Creamos una pila que vamos a llenar con las letras de a, b, c, d, e");
-
-        Pila miPilaString = new Pila();
-
-        // La completamos con 5 letras.
-
-        miPilaString.apilar("a");
-        miPilaString.apilar("b");
-        miPilaString.apilar("c");
-        miPilaString.apilar("d");
-        miPilaString.apilar("e");
-
-        // La mostramos por pantalla
-
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Mostramos por pantalla la pila con toString()");
-        System.out.println("La pila de strings es: " + miPilaString.toString());
-
-        // Obtenemos el último elemento con obtenerTope
-        // Casteamos al String
-        String topS = (String) miPilaString.obtenerTope();
-        System.out.println("El último elemento actual de la pila es: " + topS);
-
-        // Test de desapilar un elemento:
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de desapilar un elemento:");
-        miPilaString.desapilar();
-
-        // Casteamos al String
-        topS = (String) miPilaString.obtenerTope();
-        System.out.println("El último elemento actual de la pila luego de desapilar el último es: " + topS);
-
-        // Test de esVacia():
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de esVacia() con pila con elementos:");
-        System.out.println("La pila esta vacía es:" + miPilaString.esVacia());
-        
-
-        // Test de vaciar():
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test de vaciar():");
-        miPilaString.vaciar();
-        System.out.println("La pila esta vacía es:" + miPilaString.esVacia());
-
-        // Test de vaciar():
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Volvemos a llenar la pila con las letras a, b, c, d, e");
-
-        miPilaString.apilar("a");
-        miPilaString.apilar("b");
-        miPilaString.apilar("c");
-        miPilaString.apilar("d");
-        miPilaString.apilar("e");
-
-        System.out.println("Test de clone:");
-        
-        Pila nuevaPilaString = miPilaString.clone();
-        
-        System.out.println("La pila original es:" + miPilaString);
-        System.out.println("La pila clonada es:" + nuevaPilaString);
-
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test método equals con dos pilas iguales");
-        System.out.println("equals: " + miPilaString.equals(nuevaPilaString));
-        // Si apilamos un objeto en la nueva pila, no debería mostrarse en la original
-        nuevaPilaString.apilar("f");
-        
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Apilamos un dato en la pila clonada y vemos si son iguales o no");
-        System.out.println("La pila original es: " + miPilaString.toString());
-        System.out.println("La pila clonada es: " + nuevaPilaString.toString());
-     
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Test método equals con dos pilas distintas");
-        System.out.println("equals: " + miPilaString.equals(nuevaPilaString));
-        
-    }
+        Scanner entrada = new Scanner(System.in);
     
+        System.out.println("A continuación se presenta el testing de la clase pila implementada de manera estática con un largo predeterminado de 20 elementos");
+
+        do{
+            System.out.println("---------------------------\n" +
+                "Ingrese la opción deseada: \n" +
+                 "1- Apilar un elemento: apilar() \n"+
+                 "2- Desapilar un elemento: desapilar() \n"+
+                 "3- Obtener tope de la pila: obtenerTope() \n"+
+                 "4- Ver si la pila esta vacía: esVacia() \n"+
+                 "5- Vaciar la pila: vaciar() \n"+
+                 "6- Ver la pila: toString() \n"+
+                 "7- Clonar la pila: clone() \n"+
+                 "8- Es capicua la pila: capicua() \n"+
+                 "9- Terminar test y salir\n"+
+                 "---------------------------" );
+            opcionMenu = entrada.nextInt();
+            menu(opcionMenu, miPila);
+         }while(opcionMenu >= 1 && opcionMenu <=8);
+    
+    
+    }
+
+    public static void menu(int opcion, Pila pila){
+        // Menú del testing
+        // Se da la funcionalidad para cada una de las opciones que puede elegir el/la usuaria.
+
+
+        Scanner entrada = new Scanner(System.in);
+        int paramE;
+        String paramS ; 
+        char eos, ocn;
+
+        switch(opcion){
+            case 1:
+                System.out.println("Desea ingresar un entero o una cadena. Ingrese 'e' o 's': ");
+                eos = entrada.nextLine().charAt(0);
+                if(eos == 'e'){
+                    System.out.println("Ingrese un entero: ");
+                    paramE = entrada.nextInt();
+
+                    System.out.println("Es " + pila.apilar(paramE) + " que se ha apilado correctamente el valor ingresado");
+                } else if(eos=='s'){
+                    System.out.println("Ingrese una cadena: ");
+                    paramS = entrada.nextLine();
+                    System.out.println("Es " + pila.apilar(paramS)  + " que se ha apilado correctamente el valor ingresado");
+                } else {
+                    System.out.println("Usted a ingresado un tipo de dato incorrecto.");
+                };break;
+            case 2:
+                System.out.println("Es " + pila.desapilar()  + " que se ha desapilado correctamente el valor ingresado");break;
+            case 3:
+                System.out.println("El tope actual de la pila es: " + pila.obtenerTope());break;
+            case 4:
+                System.out.println("Es " + pila.esVacia() + " que la pila es vacía" );break;
+            case 5:
+                pila.vaciar();
+                System.out.println("La pila se ha vaciado");break;
+            case 6:
+                System.out.print("La pila es: ");            
+                System.out.println(pila.toString());break;
+            case 7:
+                Pila nuevaPila = pila.clone();
+                System.out.println("La pila original es: " + pila.toString());
+                System.out.println("La pila clonada es: " + nuevaPila.toString());
+                System.out.println("Desea desapilar un elemento en la pila original, la clonada o ninguna. Ingrese 'o', 'c' o 'n'");
+                ocn = entrada.nextLine().charAt(0);
+                if(ocn == 'o'){
+                    pila.desapilar();
+                    System.out.println("La pila original es: " + pila.toString());
+                    System.out.println("La pila clonada es: " + nuevaPila.toString());
+                } else if (ocn =='c'){
+                    nuevaPila.desapilar();
+                    System.out.println("La pila original es: " + pila.toString());
+                    System.out.println("La pila clonada es: " + nuevaPila.toString());
+                } 
+                System.out.println("---------------------------");
+                System.out.println("El menú continua con la pila original");break;
+            case 8:
+                System.out.println("Es " + capicua(pila) + " que la pila es capicua");break;
+            case 9:
+                System.out.println("!Gracias por utilizar el testing!");
+            
+        }
+
+    }
     public static boolean capicua(Pila pila){
-        
-        int i = 0;
+        // Método capicua. Recibe una pila y se fija si los elementos que la componen son capicuas.
+
         Pila pilaAux = pila.clone();
         Pila pilaAux2 = new Pila();
         
@@ -218,6 +118,6 @@ public class TestPila {
         return pila.equals(pilaAux2);
         
     }
-    
+
 
 }

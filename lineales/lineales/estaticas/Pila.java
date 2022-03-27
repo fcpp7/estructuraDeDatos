@@ -97,6 +97,7 @@ public class Pila {
             } 
         }
         
+    @Override
     public Pila clone(){
         // método que genera una copia exacta de la pila en una nueva instancia.
         
@@ -112,25 +113,31 @@ public class Pila {
         
     }
     
+    @Override
     public String toString(){
         
-        String s = "[";
+        String s;
         
         if(!esVacia()){
             int i;
-            for(i = 0; i <=this.tope;i++){
-                s = s + " " + this.arreglo[i]; 
+            s = "[";
+            for(i = this.tope; i >=0;i--){
+                s +=  this.arreglo[i];
+                if (i != 0){
+                    s+=",";
+                } 
             }
+            s += "]";
+        } else {
+            s = "Pila vacía";
         }
         
-        s += "]";
         
         return s;
-                
-                
+
     }
 
-    
+
     public boolean equals(Pila otraPila){
         // Método equals, crea dos clones de las pilas, para desapilarlas e ir comparando 
         // elemento a elemento sin modificar los objetos originales.
