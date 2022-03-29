@@ -70,15 +70,37 @@ public class Pila{
 
     public void vaciar(){
     // Método que vacía la pila
-    // Se usa una estructura repetitiva que se ejecuta mientras la pila 
-    // NO sea vacía. De esta manera, cuando la pila NO es vacía, va sacando 
-    // el último elemento con el método desapilar.
-        
-        while(!esVacia()){
-            this.tope = null;
-        } 
+    // Le asigna null al tope, rompiendo los enlaces, luego java con el garbage collector limpia la memoria.    
+        this.tope = null;
     }
     
+    @Override
+    public Pila clone(){
+
+        Pila nuevaPila = new Pila();
+
+        if(!this.esVacia()){
+            Nodo aux = this.tope;
+            Nodo nuevo = new Nodo(aux.getElem(), null);
+            nuevaPila.tope = nuevo;
+            Nodo auxClon = nuevaPila.tope;
+
+            aux = aux.getEnlace();
+            while(aux != null){
+                nuevo = new Nodo(aux.getElem(), null);
+                auxClon.setEnlace(nuevo);
+                auxClon = auxClon.getEnlace();
+                aux = aux.getEnlace();
+            }
+
+        }
+
+        return nuevaPila;
+
+
+    }
+
+
     @Override
     public String toString(){
 

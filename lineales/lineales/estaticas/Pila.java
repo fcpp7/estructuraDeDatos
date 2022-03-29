@@ -103,14 +103,14 @@ public class Pila {
         
         Pila nuevaPila = new Pila(); 
         
-        if(!esVacia()){
-            int i;
-            for(i=0; i<=this.tope;i++){
-                nuevaPila.apilar(this.arreglo[i]);
-            }
+
+        nuevaPila.tope = this.tope;
+        if(!(this.esVacia())){
+            nuevaPila.arreglo = this.arreglo.clone();
         }
         return nuevaPila;
-        
+
+
     }
     
     @Override
@@ -121,9 +121,9 @@ public class Pila {
         if(!esVacia()){
             int i;
             s = "[";
-            for(i = this.tope; i >=0;i--){
+            for(i = 0; i <= this.tope;i++){
                 s +=  this.arreglo[i];
-                if (i != 0){
+                if (i != this.tope){
                     s+=",";
                 } 
             }
