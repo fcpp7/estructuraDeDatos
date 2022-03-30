@@ -1,5 +1,7 @@
 package lineales.dinamicas;
 
+
+
 public class Pila{
 
     private Nodo tope;
@@ -49,7 +51,7 @@ public class Pila{
         if(!esVacia()){
             last = tope.getElem();;
         } else {
-            last = "Pila vacía";
+            last = null;
         }
         
         return last;

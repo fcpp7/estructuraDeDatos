@@ -2,11 +2,13 @@
 package lineales.estaticas;
 
 
+
+
 public class Pila {
 
     private Object[] arreglo;
     private int tope;
-    private static final int TAMANIO = 20;
+    private static final int TAMANIO = 10;
     
     // Constructor vacío
     
@@ -64,8 +66,8 @@ public class Pila {
     
     public Object obtenerTope(){
         
-        Object last = "Pila vacía";
-        
+        Object last = null;
+  
         if(!esVacia()){
             last = this.arreglo[this.tope];
         }
