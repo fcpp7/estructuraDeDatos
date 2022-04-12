@@ -14,8 +14,9 @@ public class Lista{
         public boolean insertar(Object elemento, int pos){
                 // Método insertar que inserta un objeto en la posición ingresada como parametro.
                 boolean exito = true;
+                int largo = this.longitud();
                 // Chequea si la posición ingresada es correcta. Caso contrario devuelve false.
-                if(pos>=1 & pos <= this.longitud()+1){
+                if(pos>=1 & pos <= largo+1){
 
                         if(pos == 1){
                                 // Si la posición es la primera se ubica el nuevo elemento en el primer lugar
@@ -44,8 +45,9 @@ public class Lista{
         public boolean eliminar(int pos){
                 // Método eliminar, elimina un elemento de la posición dada por parametro.
                 boolean exito = true;
+                int largo = this.longitud();
 
-                if(pos >= 1 & pos <= this.longitud()){
+                if(pos >= 1 & pos <= largo){
                         // Dadp que la posición solicitada es una de las posibles, se 
                         // chequea si es la primera (caso especial) u otra.
                         if(pos == 1){
@@ -80,8 +82,9 @@ public class Lista{
                 
                 int i = 1;
                 Object ret = null;
+                int largo = this.longitud();
 
-                if(pos>=1 & pos <= this.longitud()){
+                if(pos>=1 & pos <= largo){
                         // La posición es válida
                         Nodo aux = this.cabecera;
                         while(i <= pos){
@@ -105,9 +108,9 @@ public class Lista{
                 boolean exito = false;
                 int i = 1;
                 Nodo aux = this.cabecera;
+                int largo = this.longitud();
 
-
-                while(i <= this.longitud() & !exito){
+                while(i <= largo & !exito){
                         // Se recorre la lista hasta que se termine la misma, o 
                         // se haya encontrado el elemento
                         if(aux.getElem()==elemento){
@@ -205,13 +208,14 @@ public class Lista{
                 // considera "Lista vacía". Se retorna el string.
 
                 String s ="[";
+                int largo = this.longitud();
 
                 if(this.esVacia()){
                         s = "Lista vacía";
                 } else {
                         int i = 1;
                         Nodo aux = this.cabecera;
-                        while(i <= this.longitud()){
+                        while(i <= largo){
                                 s += aux.getElem().toString();
                                 aux = aux.getEnlace();
                                 i++;
