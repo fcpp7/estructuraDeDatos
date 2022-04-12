@@ -89,22 +89,40 @@ public class Cola {
     // Métodos NO básicos
 
     public Cola clone(){
+        // Método clonar la Cola.
 
         Cola nuevaCola = new Cola();
 
         if(!this.esVacia()){
+            // Si NO es vacía la cola original, generamos un nodo auxiliar que nos ayudará
+            // a recorrerla e ir copiando cada nodo al la nueva cola.
             Nodo aux = this.frente;
+            // El primer nodo nuevo tiene el elemento del primer nodo de la cola original.
+            // Y enlace null
             Nodo nuevo = new Nodo(aux.getElem(), null);
+            // Se establece el nodo nuevo como frente de la nueva cola
             nuevaCola.frente = nuevo;
+            // Se crea otro nodo auxiliar que apunta al frente de la nueva cola.
+            // Este nodo es el que irá haciendo las conexiones entre nodos de la nueva cola.
             Nodo auxClon = nuevaCola.frente;
 
+            // Aux pasa al siguiente enlace de la cola original.
             aux = aux.getEnlace();
             while(aux != null){
+                // Mientras el enlace de la cola original no sea null (no sea el último)
+                // Creamos nodo con el elemento del nodo y enlace nulo.
                 nuevo = new Nodo(aux.getElem(), null);
+                // Enlazamos el nodo que teniamos en la cola nueva, con el recién generado.
                 auxClon.setEnlace(nuevo);
+                // Pasamos el nodo auxiliar de la nueva cola al último enlace de la misma.
                 auxClon = auxClon.getEnlace();
+                // Pasamos al siguiente nodo de la cola original
                 aux = aux.getEnlace();
+                
             }
+            // Dado que también tenemos que considerar el puntero fin.
+            // El mismo se establece al finalizar la copia y se lo asigna al último
+            // nodo de la nueva cola.
             nuevaCola.fin = auxClon;
 
         }
@@ -121,9 +139,9 @@ public class Cola {
         String s = "";
 
         if(this.esVacia()){
-            s = "Pila vacía";
+            s = "Cola vacía";
         } else {
-            // Se ubica para recorre la pila
+            // Se ubica para recorre la cola
             Nodo aux = this.frente;
             s = "[";
 
