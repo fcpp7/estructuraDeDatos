@@ -8,6 +8,7 @@ public class Cola {
     private static final int TAMANIO = 10;
 
     public Cola(){
+        // Constructor de una cola vacía. El arreglo toma tamaño fijo y frente y fin empiezan en 0.
         this.arreglo = new Object[TAMANIO];
         this.frente = 0;
         this.fin = 0;
@@ -22,10 +23,10 @@ public class Cola {
         boolean exito = true;
 
         if(this.esCompleta()){
-            // Si la pila esta completa, no puedo agregar elementos.
+            // Si la cola esta completa, no puedo agregar elementos.
             exito = false;
         } else {
-            // Si la pila tiene lugar, agrego el elemento en la posición "fin" y corro fin 1 lugar.
+            // Si la cola tiene lugar, agrego el elemento en la posición "fin" y corro fin 1 lugar.
             this.arreglo[this.fin] = elemento;
             this.fin = (this.fin+1)%this.TAMANIO;
         }
@@ -40,8 +41,11 @@ public class Cola {
         boolean exito = true;
 
         if(this.esVacia()){
+            // Si es vacía no hay nada para sacar, se retorna FALSE.
             exito = false;
         } else {
+            // En caso de que tenga elementos, se pone el elemento del frente en null (eliminandolo)
+            // y frente pasa a ser puntero del siguiente elemento.
             this.arreglo[this.frente] = null;
             this.frente = (this.frente + 1) % this.TAMANIO;
         }
@@ -61,13 +65,15 @@ public class Cola {
     }
 
     public boolean esVacia(){
-        // Método que devuelve true si la pila esta vacía y false en caso contrario.
+        // Método que devuelve true si la cola esta vacía y false en caso contrario.
 
         return this.frente == this.fin;
 
     }
 
     public void vaciar(){
+        // Método para vaciar la cola. La recorre mientras no sea vacia y 
+        // va poniendo como null cada elemento.
 
         while(!this.esVacia()){
             this.arreglo[this.frente] = null;
@@ -78,7 +84,7 @@ public class Cola {
     }
 
     public boolean esCompleta(){
-        // Método que devuelve true si la pila esta completa y false en caso contrario.
+        // Método que devuelve true si la cola esta completa y false en caso contrario.
 
         return this.frente == (this.fin+1)%this.TAMANIO;
 
@@ -109,7 +115,7 @@ public class Cola {
         String s;
         if(this.esVacia()){
 
-            s = "Pila vacía";
+            s = "Cola vacía";
 
         } else {
 
