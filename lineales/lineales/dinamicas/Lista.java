@@ -113,7 +113,7 @@ public class Lista{
                 while(i <= largo & !exito){
                         // Se recorre la lista hasta que se termine la misma, o 
                         // se haya encontrado el elemento
-                        if(aux.getElem()==elemento){
+                        if(aux.getElem().equals(elemento)){
                                 // Se encontró el elemento, se corta el whie.
                                 exito = true;
                         } else {
@@ -228,6 +228,24 @@ public class Lista{
                 
                 return s;
 
+        }
+
+        public Lista obtenerMultiplos(int num){
+
+                Lista nuevaLista = new Lista();
+
+                int largo = this.longitud();
+
+                int i=1;
+                int pos = num;
+                
+                while(pos>=1 & pos <= largo){
+                        nuevaLista.insertar(this.recuperar(pos), i);
+                        i +=1;
+                        pos = num*i;
+                }
+
+                return nuevaLista;
         }
 
 
