@@ -11,7 +11,7 @@ import lineales.dinamicas.*;
 
 /**
  *
- * @author Agus
+ * 
  */
 public class TestBinario {
 
