@@ -114,7 +114,7 @@ public class TestingLista {
 	        l2.vaciar();
 	        System.out.println("Vacia copia: \t\t\t\t\t--> " + l2.toString());
 
-	    }
+		}
 
 }
 

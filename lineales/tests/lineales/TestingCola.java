@@ -38,16 +38,13 @@ public class TestingCola {
 			num++;
 			System.out.println("\t--> " + q1.toString());
 		}
-		System.out
-				.println("Recupera frente espera 1 recupera: \t\t\t" + (((int) q1.obtenerFrente() == 1) ? sOk : sErr));
-
+		System.out.println("Recupera frente espera 1 recupera: \t\t\t" + (((int) q1.obtenerFrente() == 1) ? sOk : sErr));
 		System.out.print("Saca espera true : \t\t\t\t\t" + ((q1.sacar() == true) ? sOk : sErr));
 		System.out.println("\t--> " + q1.toString());
 		System.out.println("Recupera frente espera 2 recupera \t\t\t" + (((int) q1.obtenerFrente() == 2) ? sOk : sErr));
 		System.out.print("Saca espera true: \t\t\t\t\t" + ((q1.sacar() == true) ? sOk : sErr));
 		System.out.println("\t--> " + q1.toString());
-		System.out
-				.println("Recupera frente espera 3 recupera: \t\t\t" + (((int) q1.obtenerFrente() == 3) ? sOk : sErr));
+		System.out.println("Recupera frente espera 3 recupera: \t\t\t" + (((int) q1.obtenerFrente() == 3) ? sOk : sErr));
 		System.out.print("Pone 23 espera true: \t\t\t\t\t" + ((q1.poner(23) == true) ? sOk : sErr));
 		System.out.println("\t--> " + q1.toString());
 		System.out.print("Pone 24 espera true: \t\t\t\t\t" + ((q1.poner(24) == true) ? sOk : sErr));

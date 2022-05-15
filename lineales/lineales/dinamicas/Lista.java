@@ -230,23 +230,6 @@ public class Lista{
 
         }
 
-        public Lista obtenerMultiplos(int num){
-
-                Lista nuevaLista = new Lista();
-
-                int largo = this.longitud();
-
-                int i=1;
-                int pos = num;
-                
-                while(pos>=1 & pos <= largo){
-                        nuevaLista.insertar(this.recuperar(pos), i);
-                        i +=1;
-                        pos = num*i;
-                }
-
-                return nuevaLista;
-        }
 
 
 }
