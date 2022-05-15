@@ -116,9 +116,82 @@ public class ArbolGen {
 
     }
 
-    public Lista ancestros(Object elemento){
+    public Lista ancestros(Object elem){
         Lista listaAncestros = new Lista();
+
+        if(!this.esVacio()){
+            ancestrosAux(this.raiz, listaAncestros, elem, 0);
+        }
+
         return listaAncestros;
+    }
+
+    private void ancestrosAux(NodoGen n, Lista ls, Object elem, int pos){
+
+        boolean estado = false;
+
+        if(n!=null){
+            
+            if(!n.getElem().equals(elem)){
+                ls.insertar(n.getElem(), pos+1);
+
+                estado = estadoAncestro(n, elem);
+
+                if(!estado){
+
+                    NodoGen hi = n.getHijoIzquierdo();
+                    if(hi !=null){
+                        ancestrosAux(hi, ls, elem, pos);
+                        estado = estadoAncestro(hi, elem);
+                        
+                        if(!estado){
+                            NodoGen hd = hi.getHermanoDerecho();
+                            while(hd!=null && !estado){
+                                ancestrosAux(hd, ls, elem, pos);
+                                estado = estadoAncestro(hd, elem);
+                                hd = hd.getHermanoDerecho();
+                                if(!estado){
+                                    ls.eliminar(pos+1);
+                                }
+                            }
+
+
+                        }
+
+                    }
+    
+                }
+            }
+
+
+        }
+
+
+    }
+
+    private boolean estadoAncestro(NodoGen n, Object elem){
+
+        boolean estado = false;
+        
+        NodoGen hi = n.getHijoIzquierdo();
+        if(hi!=null){
+            if(hi.getElem().equals(elem)){
+                estado = true;
+            } else {
+                NodoGen hd = hi.getHermanoDerecho();
+                while(hd!=null){
+                    if(hd.getElem().equals(elem)){
+                        estado = true;
+                        hd = null;
+                    } else {
+                        hd = hd.getHermanoDerecho();
+                    }
+                }
+            }
+        }
+
+        return estado;
+
     }
 
 
@@ -547,6 +620,58 @@ public class ArbolGen {
 
         return s;
     }
+    public boolean sonFrontera(Lista unaLista){
+        // Método publico que recibe una lista de elementos y 
+        // retorna true si TODOS los mismos forman parte de la frontera del árbol
+        // y false en caso contrario
+
+        boolean estan = false;
+
+        // Se clona la lista para podes modificarla sin modificar el original.
+        Lista lClone = unaLista.clone();
+
+        if(!this.esVacio() && !lClone.esVacia()){
+            estan = sonFronteraAux(this.raiz, lClone);
+        }
+
+        return estan;
+    }
+
+    private boolean sonFronteraAux(NodoGen n, Lista ls){
+        // Método privado recursivo para ir chequeando cada valor de la lista
+        // si esta en la frontera. Primero baja hasta nodos frontera (nodos que NO tienen
+        // hijo izquierdo) y chequea si ese valor del nodo esta en la lista. En 
+        // caso de que este, lo elimina.
+
+        int i;
+
+        NodoGen hi = n.getHijoIzquierdo();
+
+        if(hi == null){
+            // Estamos en un valor de la frontera
+            i = ls.localizar(n.getElem());
+            if(i > 0){
+                ls.eliminar(i);
+            }
+        } else {
+            // No estamos en una frontera, entonces seguimos recorriendo con preorden
+            sonFronteraAux(hi, ls);
+
+            NodoGen hd = hi.getHermanoDerecho();
+            while(hd!=null){
+                sonFronteraAux(hd, ls);
+                hd = hd.getHermanoDerecho();
+            }
+        }
+
+        // Si la lista tiene longitud 0, entonces es que todos los elementos fueron
+        // encontrados y eliminados. En caso contrario es que quedaron elementos, 
+        // por lo tanto no todos los elementos de la lista estaban en la frontera.
+        return ls.longitud()==0;
+
+    }
+
+
 
 
 
