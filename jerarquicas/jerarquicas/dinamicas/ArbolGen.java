@@ -117,82 +117,70 @@ public class ArbolGen {
     }
 
     public Lista ancestros(Object elem){
-        Lista listaAncestros = new Lista();
 
-        if(!this.esVacio()){
-            ancestrosAux(this.raiz, listaAncestros, elem, 0);
+        Lista ls = new Lista();
+        int pos = 0;
+
+        if(!this.esVacio() && !this.raiz.getElem().equals(elem)){
+
+            ancestrosAux(this.raiz, ls, elem, pos);
+
         }
 
-        return listaAncestros;
+
+        return ls;
+
     }
 
-    private void ancestrosAux(NodoGen n, Lista ls, Object elem, int pos){
+    private boolean ancestrosAux(NodoGen n, Lista lista, Object elemento, int pos){
 
-        boolean estado = false;
+        boolean exito = false;
+        if(n != null){
 
-        if(n!=null){
-            
-            if(!n.getElem().equals(elem)){
-                ls.insertar(n.getElem(), pos+1);
+            // Buscamos en los hijos del nodo si esta el elemento
+            NodoGen hi = n.getHijoIzquierdo();
+            if(hi!=null){
+                exito = hi.getElem().equals(elemento);
 
-                estado = estadoAncestro(n, elem);
-
-                if(!estado){
-
-                    NodoGen hi = n.getHijoIzquierdo();
-                    if(hi !=null){
-                        ancestrosAux(hi, ls, elem, pos);
-                        estado = estadoAncestro(hi, elem);
+                NodoGen hd = hi.getHermanoDerecho();
+                while(hd!=null && !exito){
+                    exito = hd.getElem().equals(elemento);
+                    hd = hd.getHermanoDerecho();
                         
-                        if(!estado){
-                            NodoGen hd = hi.getHermanoDerecho();
-                            while(hd!=null && !estado){
-                                ancestrosAux(hd, ls, elem, pos);
-                                estado = estadoAncestro(hd, elem);
-                                hd = hd.getHermanoDerecho();
-                                if(!estado){
-                                    ls.eliminar(pos+1);
-                                }
-                            }
-
-
-                        }
-
-                    }
-    
                 }
             }
 
-
-        }
-
-
-    }
-
-    private boolean estadoAncestro(NodoGen n, Object elem){
-
-        boolean estado = false;
-        
-        NodoGen hi = n.getHijoIzquierdo();
-        if(hi!=null){
-            if(hi.getElem().equals(elem)){
-                estado = true;
+            if(exito){
+                // Si encontramos al elemento entre sus hijos, agregamos a la lista al 
+                // nodo
+                lista.insertar(n.getElem(), pos+1);
             } else {
-                NodoGen hd = hi.getHermanoDerecho();
-                while(hd!=null){
-                    if(hd.getElem().equals(elem)){
-                        estado = true;
-                        hd = null;
-                    } else {
+                // En caso de no haberlo encontrado, empazamos a iterar recursivamente
+                if(hi != null){
+                    // Primero vamos con el hijo izquierdo
+                    exito = ancestrosAux(hi, lista, elemento, pos);
+
+                    NodoGen hd = hi.getHermanoDerecho();
+                    while(hd != null && !exito){
+                        exito = ancestrosAux(hd, lista, elemento, pos);
+           
                         hd = hd.getHermanoDerecho();
                     }
+                    // Si encuentra cuando sale de recorrer los hijos se encontró el elemento
+                    // exito sera true y entonces vamos insertando el elemento "padre"
+           
+                    if(exito){
+                        lista.insertar(n.getElem(), pos+1);
+                    }
+
                 }
             }
+
         }
 
-        return estado;
-
+        return exito;
     }
+
 
 
     public int altura(){
@@ -526,6 +514,113 @@ public class ArbolGen {
 
         this.raiz = null;
     }
+
+
+    public int grado(){
+
+        int g = -1;
+
+        if(!this.esVacio()){
+            g = gradoAux(this.raiz, g);
+
+        }
+
+        return g;
+    }
+
+    private int gradoAux(NodoGen n, int grado){
+
+        int g=0;
+
+        if(n!=null){
+            NodoGen hi = n.getHijoIzquierdo();
+            if(hi!=null){
+                g += 1;
+                
+                NodoGen hd = hi.getHermanoDerecho();
+                while(hd!=null){
+                    g +=1;
+                    hd = hd.getHermanoDerecho();
+                }
+
+                if(g > grado){
+                    grado = g;
+                }
+
+            // Empezamos a iterar.
+            hi = n.getHijoIzquierdo();
+            if(hi != null){
+                grado = gradoAux(hi, grado);
+
+                hd = hi.getHermanoDerecho();
+                while(hd!=null){
+                    grado = gradoAux(hd, grado);
+                    hd = hd.getHermanoDerecho();
+                }
+            }
+
+        }
+    }
+        return grado;
+
+
+    }
+
+    public int gradoSubarbol(Object elem){
+
+        int g = -1;
+        if(!this.esVacio()){
+            g = subGradoAux(this.raiz, elem);
+
+        }
+
+        return g;
+    }
+
+
+
+    private int subGradoAux(NodoGen n, Object elem){
+
+        int grado = -1;
+
+        if(n != null){
+            if(n.getElem().equals(elem)){
+                grado = 0;
+                NodoGen hi = n.getHijoIzquierdo();
+                if(hi != null){
+                    grado +=1;
+                    
+                    NodoGen hd = hi.getHermanoDerecho();
+                    while(hd!=null){
+                        grado += 1;
+
+                        hd = hd.getHermanoDerecho();
+                    }
+                }
+            } else{
+                // No encontramos, entonces seguimos iterando buscando el elemento
+                NodoGen hi = n.getHijoIzquierdo();
+                if(hi != null){
+                    grado = subGradoAux(hi, elem);
+
+                    if(grado == -1){
+                        NodoGen hd = hi.getHermanoDerecho();
+                        while(hd!=null && grado==-1){
+                            grado = subGradoAux(hd, elem);
+                            hd = hd.getHermanoDerecho();
+                        }
+                    }
+                }
+            }
+            
+
+        }
+
+
+
+        return grado;
+    }
+
 
     @Override
     public ArbolGen clone(){
