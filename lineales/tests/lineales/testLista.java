@@ -25,10 +25,6 @@ public class testLista {
         l1.insertar('J', 10);
         System.out.println("Lista original"+l1.toString());
 
-
-        System.out.println("Lista multiplos"+l1.obtenerMultiplos(3).toString());
-        
-    
     }
 
 

@@ -163,10 +163,13 @@ public class ArbolBin {
 
     public Object padre(Object elemento){
         // Método que retorna el valor almacenado en su nodo padre.
-        Object elemPadre = new Object();
+        Object elemPadre = null;
+        
         
         // Se hace un algoritmo recursivo PRIVADO para buscar al padre.
-        elemPadre = busquedaPadre(this.raiz, elemento);
+        if(!this.esVacio()){
+            elemPadre = busquedaPadre(this.raiz, elemento);
+        }
 
         return elemPadre;
 
@@ -177,19 +180,23 @@ public class ArbolBin {
 
         Object elementoPadre = null;
 
-        if(nodo != null){
-            if((nodo.getIzquierdo()!=null && nodo.getIzquierdo().getElem().equals(elemento)) 
-            || (nodo.getDerecho()!=null && nodo.getDerecho().getElem().equals(elemento))){
-               elementoPadre = nodo.getElem();
-            } else {
-                elementoPadre = busquedaPadre(nodo.getIzquierdo(), elemento);
-                if(elementoPadre==null){
-                    elementoPadre = busquedaPadre(nodo.getDerecho(), elemento);
+            if(nodo != null){
+                if(!nodo.getElem().equals(elemento)){
+                    if((nodo.getIzquierdo()!=null && nodo.getIzquierdo().getElem().equals(elemento)) 
+                    || (nodo.getDerecho()!=null && nodo.getDerecho().getElem().equals(elemento))){
+                       elementoPadre = nodo.getElem();
+                    } else {
+                        elementoPadre = busquedaPadre(nodo.getIzquierdo(), elemento);
+                        if(elementoPadre==null){
+                            elementoPadre = busquedaPadre(nodo.getDerecho(), elemento);
+                        }
+                    }
+    
                 }
-            }
-
-        }
-
+    
+    
+    
+        }        
         return elementoPadre;
 
     }
@@ -197,11 +204,11 @@ public class ArbolBin {
     // Métodos de orden
     public Lista listarPreorden() {
         Lista lis = new Lista();
-        listarPreOrdenAux(this.raiz, lis);
+        listarPreordenAux(this.raiz, lis);
         return lis;
     }
 
-    private void listarPreOrdenAux(NodoArbol nodo, Lista lis){
+    private void listarPreordenAux(NodoArbol nodo, Lista lis){
         // Método recursivo PRIVADO porque su parámetro es de tipo NodoArbol
 
         if(nodo != null){
@@ -209,53 +216,53 @@ public class ArbolBin {
             lis.insertar(nodo.getElem(), lis.longitud()+1);
 
             // Recorre a sus hijos en preorden
-            listarPreOrdenAux(nodo.getIzquierdo(), lis);
-            listarPreOrdenAux(nodo.getDerecho(), lis);
+            listarPreordenAux(nodo.getIzquierdo(), lis);
+            listarPreordenAux(nodo.getDerecho(), lis);
 
         }
     }
     
-    public Lista listarInOrden(){
+    public Lista listarInorden(){
         Lista lis = new Lista();
-        listarInOrdenAux(this.raiz, lis);
+        listarInordenAux(this.raiz, lis);
         return lis;
 
     }
 
 
-    private void listarInOrdenAux(NodoArbol nodo, Lista lis){
+    private void listarInordenAux(NodoArbol nodo, Lista lis){
         // Método recursivo PRIVADO para recorrer inorden.
 
         if(nodo!=null){
             // Recorrer hijo izquierdo en inorden
 
-            listarInOrdenAux(nodo.getIzquierdo(), lis);
+            listarInordenAux(nodo.getIzquierdo(), lis);
 
             // Visitar nodo izquierdo
             lis.insertar(nodo.getElem(), lis.longitud()+1);
 
             // Visitar hijo derecho
-            listarInOrdenAux(nodo.getDerecho(), lis);
+            listarInordenAux(nodo.getDerecho(), lis);
         }
 
     } 
 
-    public Lista listarPosOrden(){
+    public Lista listarPosorden(){
         Lista lis = new Lista();
-        listarPosOrdenAux(this.raiz, lis);
+        listarPosordenAux(this.raiz, lis);
         return lis;
 
     }
 
-    private static void listarPosOrdenAux(NodoArbol nodo, Lista lis){
+    private static void listarPosordenAux(NodoArbol nodo, Lista lis){
         // Método recursivo privado para recorrer posorden.
 
         if(nodo!= null){
             // Recorremos hijo izquierdo
-            listarPosOrdenAux(nodo.getIzquierdo(), lis);
+            listarPosordenAux(nodo.getIzquierdo(), lis);
 
             // Recorremos hijo derecho
-            listarPosOrdenAux(nodo.getDerecho(), lis);
+            listarPosordenAux(nodo.getDerecho(), lis);
 
             // Agregamos a la lista la raiz del subarbol
             lis.insertar(nodo.getElem(), lis.longitud()+1);
@@ -266,7 +273,7 @@ public class ArbolBin {
     }
 
 
-    public Lista listarNiveles(){
+    public Lista listarPorNiveles(){
         // Método que retorna una lista con los elementos del arbol por nivel.
 
         // Se crea la lista vacía
@@ -390,6 +397,74 @@ public class ArbolBin {
         
         return salida;
     } 
+
+    public Lista frontera(){
+
+        Lista frontLista = new Lista();
+        int i = 0;
+
+
+        if(!this.esVacio()){
+            frontLista = fronteraAux(this.raiz, i, frontLista);         
+        }
+        return frontLista;
+
+    }
+
+    private Lista fronteraAux(NodoArbol nodo, int pos, Lista l){
+
+        
+        if(nodo!= null){
+            if(nodo.getIzquierdo()==null && nodo.getDerecho()==null){
+                l.insertar(nodo.getElem(), pos+1);
+                pos +=1;
+            } else{
+                if(nodo.getDerecho()!=null){
+                    l = fronteraAux(nodo.getDerecho(), pos, l);
+                }
+                if(nodo.getIzquierdo()!=null){
+                    l = fronteraAux(nodo.getIzquierdo(), pos, l);
+                }
+
+            }
+        }
+        return l;
+
+    }
+
+    // Ejercicio practica parcial
+
+    public boolean verificarPatron(Lista l){
+        boolean ver =  false;
+        int pos = 1;
+        if(!this.esVacio()){
+            ver = verificarPatronAux(this.raiz, l, pos);
+        }
+
+        return ver;
+    }
+
+    private boolean verificarPatronAux(NodoArbol nodo, Lista l, int pos){
+
+        boolean verifica = false;
+        int largo = l.longitud();
+
+        if(nodo!=null){
+            if(nodo.getElem().equals(l.recuperar(pos))){
+                verifica = true;
+            }
+            if(verifica && pos < largo){
+                verifica = verificarPatronAux(nodo.getIzquierdo(), l, pos+1);
+                if(!verifica){
+                    verifica = verificarPatronAux(nodo.getDerecho(), l, pos+1);
+                }
+            }
+        }
+
+        return verifica;
+
+    }
+
     
 
 
